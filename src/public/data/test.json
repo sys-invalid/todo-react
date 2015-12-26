@@ -1,0 +1,58 @@
+{
+  "today":[{
+    "title":"Laundry",
+    "description":"I have to do laundry before end of day",
+    "date":"25  Dec",
+    "time":"10:00 A.M",
+    "tags":["laundry","chores"],
+    "state":"A"
+    },
+    {
+      "title":"Dishes",
+      "description":"I have to do dishes before end of day",
+      "date":"25  Dec",
+      "time":"10:00 A.M",
+      "tags":["laundry","chores"],
+      "state":"A"
+    },
+      {
+        "title":"Gym",
+        "description":"I have to do gym before end of day",
+        "date":"25  Dec",
+        "time":"10:00 A.M",
+        "tags":["laundry","chores"],
+        "state":"A"
+        }],
+  "due":[{
+    "title":"Laundry",
+    "description":"I have to do laundry before end of day",
+    "date":"26  Dec",
+    "time":"10:00 A.M",
+    "tags":["laundry","chores"],
+    "state":"A"
+    }],
+  "completed":[{
+    "title":"Laundry",
+    "description":"I have to do laundry before end of day",
+    "date":"24  Dec",
+    "time":"10:00 A.M",
+    "tags":["laundry","chores"],
+    "state":"A"
+    },
+    {
+      "title":"Dishes",
+      "description":"I have to do dishes before end of day",
+      "date":"24  Dec",
+      "time":"10:00 A.M",
+      "tags":["laundry","chores"],
+      "state":"A"
+    },
+      {
+        "title":"Gym",
+        "description":"I have to do gym before end of day",
+        "date":"24  Dec",
+        "time":"10:00 A.M",
+        "tags":["laundry","chores"],
+        "state":"A"
+        }]
+}

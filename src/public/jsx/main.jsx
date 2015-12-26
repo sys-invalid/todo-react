@@ -1,13 +1,23 @@
 var Main = React.createClass({
+  getInitialState:function(){
+    var $this = this;
+    $.getJSON( "/data/test.json", function( data ) {
+      $this.setState({cards:data});
+    });
+    return {cards:{},tabs:["today","due","completed"]}
+  },
   render:function(){
-    return (<Tabs/>)
+    return (
+      <div className="container red lighten-4">
+        <Tabs tabs={this.state.tabs}/>
+        <CardContainers tabs={this.state.tabs} todos={this.state.cards}/>
+      </div>)
   }
 });
 
-
 var Tabs = React.createClass({
   getInitialState:function(){
-    return ({tabs:["today","due","finished"],active:"today"})
+    return ({active:"today"})
   },
   componentDidMount: function() {
      $('ul.tabs').tabs();
@@ -15,7 +25,7 @@ var Tabs = React.createClass({
   render :function(){
     var tabs = [];
      var $this = this;
-    _.forEach(this.state.tabs, function(value,index){
+    _.forEach(this.props.tabs, function(value,index){
       var tabid ="#" + value;
       var className = "white-text " + ($this .state.active === value ? "active" : "");
       tabs.push( (<li className="tab col s4" key={index}><a className={className}  href={tabid}>{value}</a></li>));
@@ -26,20 +36,38 @@ var Tabs = React.createClass({
   }
 })
 
+var CardContainers=  React.createClass({
+  render:function(){
+    var $this = this;
+    var containers = _.map(this.props.tabs, function(v){
+      var todos = $this.props.todos[v];
+      return (<div id={v} className="col s12 m12 l12" key={v}>
+                <Cards todos={todos}/>
+            </div>)
+    });
+    return(
+    <div className="row padding-10">
+      {containers}
+    </div>)
+  }
+})
+
 var Cards = React.createClass({
   render:function(){
-
-    var cards =[];
-    for(var i =0; i <5; i++){
-      cards.push(<div className="row" key={i} ><Card/></div>)
-    }
+    var $this = this;
+  var cards =  _.map($this.props.todos, function(v,i){
+      return (
+        <div className="row" key={i} ><Card todo ={v}/></div>
+      )
+    })
     return (<div>{cards}</div>)
   }
 });
 
 var Card = React.createClass({
-
   render:function(){
+    var $this = this;
+    var todo = $this.props.todo;
     var marginRight ={
       marginRight:"10px"
     }
@@ -49,29 +77,18 @@ var Card = React.createClass({
               <div className="row">
                  <div className="col s2 ">
                     <div className="row valign-wrapper">
-                       <h5 className="valign">25 Dec</h5>
+                       <h5 className="valign">{todo.date}</h5>
                     </div>
                     <div className="row valign-wrapper">
-                       <h5 className="valign">10:00 P.M.</h5>
+                       <h5 className="valign">{todo.time}</h5>
                     </div>
                  </div>
                  <div className="col s10 ">
                     <div className="row">
-                       <span className="card-title">Do laundry</span>
-                       <p className="truncate">I am a very simple card. I am good at containing small bits of information.
-                          I am convenient because I require little markup to use effectively.
-                       </p>
+                       <span className="card-title">{todo.title}</span>
+                       <p className="truncate">{todo.description} </p>
                     </div>
-                    <div className="row">
-                       <div className="chip">
-                          Tag
-                          <i className="material-icons">close</i>
-                       </div>
-                       <div className="chip">
-                          Tag
-                          <i className="material-icons">close</i>
-                       </div>
-                    </div>
+                    <Chips chips={todo.tags}/>
                  </div>
               </div>
            </div>
@@ -85,8 +102,19 @@ var Card = React.createClass({
   }
 })
 
+var Chips =React.createClass({
+  render:function(){
+    var chips = _.map(this.props.chips,function(v,i){
+      return (<div className="chip" key={i}>
+                {v}
+                  <i className="material-icons">close</i>
+            </div>)
+    })
+    return (  <div className="row">
+              {chips}
+              </div>
+            )
+  }
+})
 
-ReactDOM.render(<Main/>,document.getElementById("tabs"))
-ReactDOM.render(<Cards/>,document.getElementById("today"))
-ReactDOM.render(<Cards/>,document.getElementById("due"))
-ReactDOM.render(<Cards/>,document.getElementById("finished"))
+ReactDOM.render(<Main/>,document.getElementById("container"))
